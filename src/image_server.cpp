@@ -10,14 +10,29 @@
 
 #include <ctime>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <boost/asio.hpp>
+#include <iostream>
 
 using boost::asio::ip::tcp;
 
-std::vector<uint8_t> get_image()
+std::vector<uint8_t> get_image(const char* filename)
 {
-  return std::vector<uint8_t>();
+  // open the file:
+    std::streampos fileSize;
+    std::ifstream file(filename, std::ios::binary);
+    // get its size:
+    file.seekg(0, std::ios::end);
+    fileSize = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    // read the data:
+    std::vector<uint8_t> fileData(fileSize);
+    file.read((char*) &fileData[0], fileSize);
+
+    return fileData;
+    
 }
 
 int main()
@@ -33,7 +48,7 @@ int main()
       tcp::socket socket(io_context);
       acceptor.accept(socket);
 
-      auto message = get_image();
+      auto message = get_image("cat.jpg");
 
       boost::system::error_code ignored_error;
       boost::asio::write(socket, boost::asio::buffer(message), ignored_error);
