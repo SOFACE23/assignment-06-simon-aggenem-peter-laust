@@ -22,6 +22,7 @@ std::vector<uint8_t> get_image(const char* filename)
   // open the file:
     std::streampos fileSize;
     std::ifstream file(filename, std::ios::binary);
+
     // get its size:
     file.seekg(0, std::ios::end);
     fileSize = file.tellg();
@@ -31,6 +32,7 @@ std::vector<uint8_t> get_image(const char* filename)
     std::vector<uint8_t> fileData(fileSize);
     file.read((char*) &fileData[0], fileSize);
 
+    //The image is now saved a vector ready to be streamed.
     return fileData;
     
 }

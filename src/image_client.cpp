@@ -15,15 +15,25 @@
 
 using boost::asio::ip::tcp;
 
+//Image size found by inspecting image.
 constexpr size_t image_size = 17618;
 
 void save_image(char* data, size_t len)
 {
+  //Create a steam to write the file to.
   std::ofstream filetoWrite;
-    filetoWrite.open("copycat.jpg");
-    for (int i = 0; i < 17618; i++){
-        filetoWrite << data[i];
-        }
+
+  //We're gonna write to a file called copycat.jpg
+  //It's most likely not there and will be created.
+  filetoWrite.open("copycat.jpg");
+
+  for (int i = 0; i < image_size; i++){
+    //The data char array contains the whole image so we can just loop over it and add it to the file
+    filetoWrite << data[i];
+    }
+
+  //Be a good boy and close the file again.
+  filetoWrite.close();
 }
 
 int main(int argc, char* argv[])

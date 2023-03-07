@@ -18,8 +18,6 @@ std::vector<BYTE> readFile(const char* filename)
     std::vector<BYTE> fileData(fileSize);
     file.read((char*) &fileData[0], fileSize);
 
-    std::cout << "\n" << fileSize << "\n";
-    std::cout << "\n" << sizeof(fileData) << "\n";
     return fileData;
 }
 
