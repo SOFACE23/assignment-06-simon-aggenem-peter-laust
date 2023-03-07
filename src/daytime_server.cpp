@@ -12,6 +12,7 @@
 #include <iostream>
 #include <string>
 #include <boost/asio.hpp>
+#include <fstream>
 
 using boost::asio::ip::tcp;
 
