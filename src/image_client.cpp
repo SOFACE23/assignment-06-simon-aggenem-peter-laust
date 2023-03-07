@@ -21,10 +21,9 @@ void save_image(char* data, size_t len)
 {
   std::ofstream filetoWrite;
     filetoWrite.open("copycat.jpg");
-    for (int i = 0; i < 17618; i++)
-    {
+    for (int i = 0; i < 17618; i++){
         filetoWrite << data[i];
-    }
+        }
 }
 
 int main(int argc, char* argv[])
