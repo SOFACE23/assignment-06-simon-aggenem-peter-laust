@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
 {
   try
   {
+    //Needs a server ip.
     if (argc != 2)
     {
       std::cerr << "Usage: client <host>" << std::endl;
@@ -26,6 +27,7 @@ int main(int argc, char* argv[])
 
     boost::asio::io_context io_context;
 
+    //Takes the host (server ip stored as an argument) and a port("daytime" corresponding to port 13).
     tcp::resolver resolver(io_context);
     tcp::resolver::results_type endpoints =
       resolver.resolve(argv[1], "daytime");
@@ -35,16 +37,23 @@ int main(int argc, char* argv[])
 
     while(true)
     {
+      //Array to store recieved data I.E. the date and time.
       boost::array<char, 128> buf;
+
+      //Error handler.
       boost::system::error_code error;
 
+      //read the data from the socket.
       size_t len = socket.read_some(boost::asio::buffer(buf), error);
 
+      //If we recieve and end of file message it means the whole message was transmitted correctly
       if (error == boost::asio::error::eof)
         break; // Connection closed cleanly by peer.
+      //Otherwise we need to return an error.
       else if (error)
         throw boost::system::system_error(error); // Some other error.
 
+      //Write the daytime to the terminal.
       std::cout.write(buf.data(), len);
     }
   }
